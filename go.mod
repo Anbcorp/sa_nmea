@@ -1,3 +1,3 @@
-module github.com/Anbcorp/sa-nmea
+module github.com/Anbcorp/sa_nmea
 
 go 1.21.3
