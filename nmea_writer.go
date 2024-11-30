@@ -19,9 +19,10 @@ func Checksum(s string) byte {
 	return result
 }
 
-func WriteMessage(b NMEABoat, seq []string) {
+func WriteMessage(b NMEABoat, seq []string) string {
+	var message strings.Builder
 	// Always mark data as from a virtual origin
-	fmt.Println("$SOL")
+	message.WriteString("$SOL\n")
 
 	// Instanciate and print Sentences
 	for i := 0; i < len(seq); i++ {
@@ -41,7 +42,10 @@ func WriteMessage(b NMEABoat, seq []string) {
 
 			n.FromBoat(b)
 
-			fmt.Println(Sentence(n))
+			message.WriteString(Sentence(n))
+			message.WriteString("\n")
 		}
 	}
+
+	return message.String()
 }
