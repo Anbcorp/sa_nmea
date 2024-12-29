@@ -2,6 +2,7 @@ package nmea
 
 import (
 	"fmt"
+	"log"
 	"reflect"
 	"strings"
 )
@@ -21,6 +22,7 @@ func Checksum(s string) byte {
 
 func WriteMessage(b NMEABoat, seq []string) string {
 	var message strings.Builder
+	log.Println("Building message for boat at: ", b.Latitude, b.Longitude)
 	// Always mark data as from a virtual origin
 	message.WriteString("$SOL\n")
 

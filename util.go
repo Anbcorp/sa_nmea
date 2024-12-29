@@ -2,7 +2,9 @@ package nmea
 
 import (
 	"fmt"
+	"log"
 	"math"
+	"strings"
 	"time"
 )
 
@@ -22,8 +24,13 @@ func NMEADate(timestamp time.Time) string {
 // Format a position in DDDMM.mmmmm format
 func NMEALatLon(pos float64) string {
 	dd, mins := math.Modf(math.Abs(pos))
-	mm := mins * 60
-	return fmt.Sprintf("%02d%02.04f", int(dd), mm)
+	m := mins * 60
+	mm, dec := math.Modf(m)
+	//strpos := fmt.Sprintf("%04d.%04d", int(dd*100+mm), int(dec*10000))
+	strdec := strings.Split(fmt.Sprintf("%.4f", dec), ".")[1]
+	strpos := fmt.Sprintf("%04d.%s", int(dd*100+mm), strdec)
+	log.Printf("Converting coord %.6f to %f %f(%f %f) -> %s", pos, dd, m, mm, dec, strpos)
+	return strpos
 }
 
 // Convert an relative wind direction (TWA,AWA) (+/- 0->180) to an absolute wind angle (0->359)
